@@ -195,3 +195,6 @@ body {
         color: #000 !important;
     }
 }
+
+/* Hidden on screen, positioned by the print rules above when printing */
+.offscreen-print { position: fixed; left: -9999px; top: 0; }

@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bike, Bell, BellOff, Eye, Flame, LayoutGrid, MessageCircle, Rows3, Search, Store, Wallet } from "lucide-react";
+import { Bike, Bell, BellOff, Eye, Flame, LayoutGrid, MessageCircle, Printer, Rows3, Search, Store, Wallet } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { apiGet, apiPatch, fmtMoney, type Order } from "@/lib/api";
 import { OrderDrawer } from "@/components/OrderDrawer";
+import { AutoPrintTicket } from "@/components/KitchenTicket";
 import { FLOW, NEXT_LABEL, STATUS_THEME, nextStatus, timeAgo, waLink } from "@/lib/orderStatus";
 
 const ALL_STATUSES = [...FLOW, "Cancelled"];
@@ -88,6 +89,9 @@ export default function Orders() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [sound, setSound] = useState(() => localStorage.getItem("orders-sound") !== "off");
+  const [autoPrint, setAutoPrint] = useState(() => localStorage.getItem("orders-autoprint") === "on");
+  const [printOrder, setPrintOrder] = useState<Order | null>(null);
+  const prevStatuses = useRef<Map<string, string> | null>(null);
   const prevMax = useRef<number | null>(null);
 
   const mutation = useMutation({
@@ -101,6 +105,23 @@ export default function Orders() {
     if (prevMax.current !== null && maxNumber > prevMax.current && sound) chime();
     if (maxNumber > 0) prevMax.current = maxNumber;
   }, [maxNumber, sound]);
+
+  useEffect(() => {
+    if (prevStatuses.current && autoPrint) {
+      const confirmed = orders.find((order) => {
+        const previous = prevStatuses.current?.get(order.id);
+        return order.status === "Confirmed" && previous !== undefined && previous !== "Confirmed";
+      });
+      if (confirmed) setPrintOrder(confirmed);
+    }
+    if (orders.length) prevStatuses.current = new Map(orders.map((order) => [order.id, order.status]));
+  }, [orders, autoPrint]);
+
+  const toggleAutoPrint = () => {
+    const value = !autoPrint;
+    setAutoPrint(value);
+    localStorage.setItem("orders-autoprint", value ? "on" : "off");
+  };
 
   const toggleSound = () => {
     const value = !sound;
@@ -137,9 +158,14 @@ export default function Orders() {
           </div>
           <p className="mt-2 text-muted-foreground">Your live order board updates as customers chat with the assistant.</p>
         </div>
-        <button data-testid="orders-sound-toggle" onClick={toggleSound} className={`flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors duration-200 ${sound ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground hover:text-foreground"}`}>
-          {sound ? <Bell size={14} /> : <BellOff size={14} />} New order chime {sound ? "on" : "off"}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button data-testid="orders-sound-toggle" onClick={toggleSound} className={`flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors duration-200 ${sound ? "border-primary/40 bg-primary/10 text-primary" : "border-border bg-card text-muted-foreground hover:text-foreground"}`}>
+            {sound ? <Bell size={14} /> : <BellOff size={14} />} New order chime {sound ? "on" : "off"}
+          </button>
+          <button data-testid="orders-autoprint-toggle" onClick={toggleAutoPrint} className={`flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition-colors duration-200 ${autoPrint ? "border-[#2C614F]/50 bg-[#2C614F]/10 text-[#2C614F] dark:text-emerald-300" : "border-border bg-card text-muted-foreground hover:text-foreground"}`}>
+            <Printer size={14} /> Auto-print on confirm {autoPrint ? "on" : "off"}
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -232,6 +258,7 @@ export default function Orders() {
       )}
 
       <OrderDrawer order={selected} open={Boolean(selected)} onOpenChange={(open) => { if (!open) setSelectedId(null); }} onSetStatus={setStatus} pending={mutation.isPending} />
+      {printOrder && <AutoPrintTicket order={printOrder} onDone={() => setPrintOrder(null)} />}
     </div>
   );
 }

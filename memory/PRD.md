@@ -32,6 +32,7 @@ Imported `khadijafatima02489-glitch/waautoma@main` with **zero source-code chang
 - New: `components/OrderDrawer.tsx` (slide-over quick view: receipt, status chips, WhatsApp chat/notify links, maps link, timeline) and `lib/orderStatus.ts` (shared status flow/theme)
 - Verified: typecheck + lint clean; testing agent frontend pass 40/40 assertions, no issues
 - Kitchen Ticket Print (June 2026): `components/KitchenTicket.tsx` — thermal-style 80mm ticket dialog from the order drawer ("Print kitchen ticket"), print CSS in index.css prints only the ticket via window.print(); verified via screenshot + typecheck/lint
+- Auto Print on Confirm (June 2026): "Auto-print on confirm" toggle on Orders page (localStorage `orders-autoprint`); watches order status transitions into "Confirmed" and auto-prints the kitchen ticket via hidden `AutoPrintTicket` (shared `TicketBody`); verified in browser (print fired exactly once on New→Confirmed transition)
 
 ### Known limits (by design)
 - Real WhatsApp delivery needs a human QR scan (Baileys) or Meta Cloud credentials; gateway is up and ready on :3001
