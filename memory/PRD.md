@@ -1,0 +1,38 @@
+# PRD — AI Restaurant WhatsApp Ordering SaaS
+
+Imported from `seri-student/waautomation` main branch and migrated into the starter’s FastAPI/Vite conventions. The product is a multi-tenant Pakistani restaurant ordering dashboard with a controlled Gemini assistant, deterministic pricing, simulator-driven WhatsApp flow, live order management, customer records, menu CRUD, analytics, human handoff, and provider abstraction.
+
+## MVP acceptance
+- Demo owner can log in with `owner@pizzapalace.pk` / `palace123`.
+- Dashboard shows seeded Pizza Palace data.
+- Simulator accepts natural-language order messages and persists the conversation/order.
+- Staff can update order status and see status messages in the conversation.
+- External WhatsApp providers are configuration-ready but not claimed as live without credentials.
+- Baileys QR pairing persists its multi-file session, forwards inbound messages into the AI ordering engine, and sends replies/status notifications through the paired WhatsApp account.
+
+## Import & Run (June 2026 — this environment)
+Imported `khadijafatima02489-glitch/waautoma@main` with **zero source-code changes**; only `.env` files, deps, and supervisor process config were created.
+
+### Setup done
+- `backend/.env`: MONGO_URL (localhost), DB_NAME=test_database, CORS_ORIGINS, JWT_SECRET, EMERGENT_LLM_KEY (Emergent Universal key), WHATSAPP_GATEWAY_URL/SECRET
+- `whatsapp-gateway/.env`: PORT=3001, BACKEND_URL, shared gateway secret; registered as supervisor program `whatsapp-gateway` (repo's own supervisor.conf copied to /etc/supervisor/conf.d/)
+- Supervisor frontend command switched `yarn start` → `yarn dev` (repo is Vite; no `start` script — env config change, not repo code)
+- pip install backend requirements (incl. emergentintegrations via extra index); yarn install in frontend/ and whatsapp-gateway/
+- Seed runs on backend startup: demo tenant Pizza Palace + owner@pizzapalace.pk/palace123 + super admin admin@restaurantai.pk/ChangeMe@2026 (also in memory/test_credentials.md)
+
+### Verification (all green)
+- API smoke: health, both logins, negative login 401, menu (5 cats/6 items), analytics, orders, customers, whatsapp config, admin summary/restaurants, role gating
+- Simulator AI flow (Gemini gemini-3-flash-preview via Emergent key): natural-language order → correct priced summary → confirmed order #1001, visible in Orders/Customers/Analytics
+- `pytest` 12/12 (repo suite) + 14/14 regression suite by testing agent (26/26 total); `yarn typecheck` clean; `oxlint` 0 errors
+- Browser pass: login → dashboard → menu → orders → admin panel; testing agent independent regression: no critical issues
+- Test residue cleaned from DB (tscheck-* tenants removed; demo WhatsApp connection reset to simulator/connected)
+
+### Known limits (by design)
+- Real WhatsApp delivery needs a human QR scan (Baileys) or Meta Cloud credentials; gateway is up and ready on :3001
+- Google Sheets OAuth sync and reminder crons inactive (need external credentials not shipped in repo)
+
+### Forced deviations from zero-code-change (platform completion gate, 3 one-line edits, behavior-preserving)
+- `routers/conversations.py` human_reply: `insert_one({**message})` copy — fixes a real 500 (raw ObjectId leaked into the returned message)
+- `routers/admin.py:151`: removed stray semicolon (lint)
+- `routers/admin.py` settings_doc: `return clean(item)` (lint false positive, identical output)
+- Post-fix: full pytest 26/26 green; reply + admin settings endpoints re-verified 200

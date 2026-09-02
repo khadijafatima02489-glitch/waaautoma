@@ -1,0 +1,228 @@
+{
+  "theme": "hybrid-dual-mode",
+  "theme_strategy": "Class-based dark/light toggle. Default to dark mode for kitchen/operations command center aesthetic (modern, sleek, high contrast), while maintaining pristine high-contrast light mode for daytime managerial reporting. Uses rich culinary warm anchors: Deep Crimson Ember (#D94833 / #E64833) as primary action kinetic trigger, Emerald Leaf (#2C614F / #25D366 for WhatsApp trust), and Warm Basmati/Clay accents.",
+  "colors": {
+    "surfaces": [
+      {
+        "name": "page_dark",
+        "kind": "solid",
+        "bg": "#0D1111",
+        "on_bg": "#F5F7F6",
+        "on_bg_muted": "#9BA3AF",
+        "roles": {
+          "link": "#F87171",
+          "error": "#EF4444",
+          "success": "#22C55E",
+          "warning": "#F59E0B",
+          "info": "#38BDF8"
+        }
+      },
+      {
+        "name": "panel_dark",
+        "kind": "solid",
+        "bg": "#151B1A",
+        "on_bg": "#F5F7F6",
+        "on_bg_muted": "#94A3B8",
+        "roles": {
+          "border": "#243331",
+          "border_focus": "#D94833",
+          "hover_bg": "#1E2726"
+        }
+      },
+      {
+        "name": "card_subtle_dark",
+        "kind": "solid",
+        "bg": "#1B2322",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#A1A1AA"
+      },
+      {
+        "name": "page_light",
+        "kind": "solid",
+        "bg": "#F8F9FA",
+        "on_bg": "#0F172A",
+        "on_bg_muted": "#475569",
+        "roles": {
+          "link": "#DC2626",
+          "error": "#B91C1C",
+          "success": "#15803D",
+          "warning": "#B45309",
+          "info": "#0284C7"
+        }
+      },
+      {
+        "name": "panel_light",
+        "kind": "solid",
+        "bg": "#FFFFFF",
+        "on_bg": "#0F172A",
+        "on_bg_muted": "#475569",
+        "roles": {
+          "border": "#E2E8F0",
+          "border_focus": "#D94833",
+          "hover_bg": "#F1F5F9"
+        }
+      },
+      {
+        "name": "brand_hero_overlay",
+        "kind": "image",
+        "contrast_against": "#0A0D0D",
+        "guarantee": "scrim: linear-gradient(135deg, rgba(13,17,17,0.92) 0%, rgba(13,17,17,0.80) 60%, rgba(217,72,51,0.25) 100%)",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#D1D5DB",
+        "roles": {
+          "link": "#FCA5A5",
+          "error": "#F87171",
+          "success": "#4ADE80"
+        }
+      },
+      {
+        "name": "whatsapp_badge",
+        "kind": "solid",
+        "bg": "#0B382C",
+        "on_bg": "#4EFEBA",
+        "on_bg_muted": "#27C28F"
+      },
+      {
+        "name": "pkr_currency_pill",
+        "kind": "solid",
+        "bg": "#2A1815",
+        "on_bg": "#FF8A7A",
+        "on_bg_muted": "#F87171"
+      }
+    ],
+    "accent": "#D94833",
+    "on_accent": "#FFFFFF",
+    "secondary_accent": "#2C614F",
+    "on_secondary_accent": "#FFFFFF",
+    "whatsapp_brand": "#25D366"
+  },
+  "typography": {
+    "font_heading": "'Space Grotesk Variable', -apple-system, sans-serif",
+    "font_body": "'Plus Jakarta Sans Variable', sans-serif",
+    "font_mono": "'JetBrains Mono Variable', monospace",
+    "scale_px": {
+      "display": 56,
+      "h1": 40,
+      "h2": 30,
+      "h3": 22,
+      "h4": 18,
+      "body": 15,
+      "caption": 13
+    },
+    "typesetting_rules": {
+      "headings": "tracking-tight font-bold text-foreground",
+      "labels_overlines": "text-xs uppercase tracking-[0.18em] font-semibold text-muted-foreground",
+      "pkr_numbers": "font-mono font-semibold tracking-tight tabular-nums",
+      "body": "leading-relaxed text-sm md:text-base text-foreground/90"
+    }
+  },
+  "entry_surfaces": {
+    "/login": "split branded auth — culinary showcase & WhatsApp AI live simulation panel left, auth credentials card right with quick-switch demo badges for Super Admin and Restaurant Manager",
+    "/": "command center dashboard — real-time WhatsApp bot status bar top, high-velocity revenue stat cards, interactive orders pipeline, flagship visual menu quick-glance, recent chat activity feed"
+  },
+  "visual_enhancers": {
+    "card_style": "1px crisp border (border-border/60), subtle backdrop blur on elevated cards (backdrop-blur-md bg-card/85), 12px nested radii (rounded-xl), hover lift (-translate-y-0.5 transition-transform duration-200)",
+    "stat_cards": "Bento-style with top accent indicator line (2px crimson or emerald glow), subtle gradient fill (from-primary/10 via-transparent to-transparent), large mono metric, and delta percentage pill badge",
+    "status_pills": {
+      "New": "bg-blue-500/15 text-blue-400 border border-blue-500/30",
+      "Confirmed": "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+      "Preparing": "bg-orange-500/15 text-orange-400 border border-orange-500/30",
+      "Ready": "bg-purple-500/15 text-purple-400 border border-purple-500/30",
+      "Out for Delivery": "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30",
+      "Delivered": "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+      "Cancelled": "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+    },
+    "noise_texture": "Subtle 2% SVG noise background to kill flat digital sterility on command center viewports",
+    "whatsapp_simulation": "Realistic emerald header, chat bubbles with audio/text simulation, typing indicator, live parsed food order payload JSON card"
+  },
+  "menu_section_blueprint": {
+    "architecture": "Master-Detail Advanced Menu Command System",
+    "features": [
+      "Category Management Bar with instant drag/reorder indicators, item count chips, and '+ Add Category' dialog",
+      "Instant Live Search with dietary tags (Spicy, Chef's Special, Vegetarian, Fast Food, Desi Karahi)",
+      "View Modes Switcher: Grid Visual Cards (high-converting food imagery) vs Compact Table (bulk price & availability editing)",
+      "Instant 'Available for AI WhatsApp' Switch: with status indicator (Green = Bot can sell, Gray = Bot marks out of stock)",
+      "Quick Price Editor in PKR with instant inline update & discount badge (e.g. 'Rs. 1,450' with original crossed out)",
+      "Advanced Dish Drawer/Modal: High-res image preview, Pakistani portion sizes (Single, Half, Full, 1 KG), spice level selector, addon modifiers (Extra Raita, Naan, Cheese), AI WhatsApp prompt training keywords",
+      "Bulk Actions: Toggle All in Category, Bulk Price Adjustment (+10% inflation/fuel surge), Export to WhatsApp Catalog format",
+      "Menu Performance Stats Bar: Total Active Dishes, Out-of-Stock count, Average Dish Price in PKR, Most Ordered Bot Item"
+    ]
+  },
+  "image_urls": [
+    {
+      "category": "auth_and_hero",
+      "url": "https://images.unsplash.com/photo-1503453776591-b4548af666a2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDZ8MHwxfHNlYXJjaHw0fHxyZXN0YXVyYW50JTIwa2l0Y2hlbiUyMGNoZWYlMjBjb29raW5nJTIwZnJlc2glMjBmb29kfGVufDB8fHx8MTc4ODI4NjI5NHww&ixlib=rb-4.1.0&q=85",
+      "description": "Master chef garnishing exquisite gourmet dish in stainless steel professional kitchen with warm ambient lighting"
+    },
+    {
+      "category": "kitchen_action",
+      "url": "https://images.unsplash.com/photo-1681270543584-8e541a1bb056?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDZ8MHwxfHNlYXJjaHwyfHxyZXN0YXVyYW50JTIwa2l0Y2hlbiUyMGNoZWYlMjBjb29raW5nJTIwZnJlc2glMjBmb29kfGVufDB8fHx8MTc4ODI4NjI5NHww&ixlib=rb-4.1.0&q=85",
+      "description": "Chef plating fresh seafood and sizzler dish in high-end restaurant pass"
+    },
+    {
+      "category": "menu_biryani_special",
+      "url": "https://images.pexels.com/photos/9738983/pexels-photo-9738983.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Royal Special Sindhi Dum Biryani garnished with saffron rice, lemon and caramelized onions"
+    },
+    {
+      "category": "menu_biryani_platter",
+      "url": "https://images.pexels.com/photos/37309267/pexels-photo-37309267.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Family Feast Biryani Platter with shami kabab, fresh salad and raita"
+    },
+    {
+      "category": "menu_bbq_skewers",
+      "url": "https://images.pexels.com/photos/9867831/pexels-photo-9867831.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Smoky Charcoal Chicken Malai Boti Skewers sizzling over flame barbecue"
+    },
+    {
+      "category": "menu_bbq_kebabs",
+      "url": "https://images.pexels.com/photos/7301037/pexels-photo-7301037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Authentic Seekh Kebabs grilling over fiery charcoal embers"
+    },
+    {
+      "category": "menu_fast_food_burger",
+      "url": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHxkZWxpY2lvdXMlMjBidXJnZXIlMjBmcmllcyUyMGZvb2R8ZW58MHx8fHwxNzg4Mjg2MzA0fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Zinger Crunch Burger loaded with melted cheddar cheese and crispy french fries"
+    },
+    {
+      "category": "menu_fast_food_double_cheeseburger",
+      "url": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwzfHxkZWxpY2lvdXMlMjBidXJnZXIlMjBmcmllcyUyMGZvb2R8ZW58MHx8fHwxNzg4Mjg2MzA0fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Gourmet Double Smash Beef Burger with caramelized onions and fries box"
+    }
+  ],
+  "motion": {
+    "page_transition": "animate-in fade-in duration-300 ease-out",
+    "card_hover": "transition-all duration-200 hover:shadow-lg hover:border-primary/40",
+    "modal_entrance": "zoom-in-95 duration-200",
+    "whatsapp_message_in": "animate-in slide-in-from-bottom-2 fade-in duration-300",
+    "reduced_motion": "motion-reduce:transition-none motion-reduce:animate-none"
+  },
+  "accessibility": {
+    "apca_contrast": "All text tokens exceed 4.5:1 on their declared surface. Muted text strictly uses #9BA3AF or lighter on dark (#0D1111) and #475569 on light (#F8F9FA).",
+    "testing_attributes": "All interactive buttons, filter chips, tabs, inputs, modals, and switches MUST have kebab-case role-based data-testid attributes (e.g. data-testid='menu-add-dish-btn', data-testid='order-status-select', data-testid='dish-availability-switch-1').",
+    "focus_states": "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background outline-none",
+    "currency_accessibility": "Always render 'PKR' or 'Rs.' prefix with accessible aria-label (e.g. aria-label='1450 Pakistani Rupees')."
+  },
+  "instructions_to_main_agent": [
+    "1. Keep existing Vite + React 19 + Tailwind v4 + FastAPI architecture in tact.",
+    "2. Upgrade CSS theme variables in frontend/src/index.css to implement the deep charcoal command center palette with #D94833 crimson and #2C614F / #25D366 WhatsApp green accents.",
+    "3. Transform the Menu Management page into a flagship experience: add Category management pill list, Grid/Table view toggles, image previews, AI-WhatsApp availability toggles, modifier options (Spicy, Portion sizes), and Pakistani Rupee (PKR) price formatting.",
+    "4. Elevate the Restaurant Dashboard with real-time aesthetic widgets (WhatsApp Live Status badge, Pakistani peak ordering hours chart, top revenue dishes, quick action order pipeline).",
+    "5. Super Admin panel should look distinctly like a sleek executive SaaS command center with tenant management, subscription tiers in PKR, and billing metrics.",
+    "6. Ensure every interactive element has a data-testid attribute for reliable automated testing."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": {
+    "never_use": [
+      "Generic blue SaaS gradients",
+      "Full transparent dropdown menus or popovers",
+      "Unstyled raw HTML datepicker or select elements (always use custom Shadcn)",
+      "Universal 'transition: all' which causes jittery layout recalculations"
+    ],
+    "always_do": [
+      "Use crisp 1px borders with opacity-controlled contrast (border-border/60)",
+      "Provide immediate optimistic UI or sonner toast notifications for user actions",
+      "Keep PKR currency symbol and thousands separators clean (e.g., Rs. 2,500)",
+      "Test both Dark Mode and Light Mode states"
+    ]
+  }
+}
