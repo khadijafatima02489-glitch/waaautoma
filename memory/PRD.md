@@ -34,6 +34,10 @@ Imported `khadijafatima02489-glitch/waautoma@main` with **zero source-code chang
 - Kitchen Ticket Print (June 2026): `components/KitchenTicket.tsx` — thermal-style 80mm ticket dialog from the order drawer ("Print kitchen ticket"), print CSS in index.css prints only the ticket via window.print(); verified via screenshot + typecheck/lint
 - Auto Print on Confirm (June 2026): "Auto-print on confirm" toggle on Orders page (localStorage `orders-autoprint`); watches order status transitions into "Confirmed" and auto-prints the kitchen ticket via hidden `AutoPrintTicket` (shared `TicketBody`); verified in browser (print fired exactly once on New→Confirmed transition)
 
+### Deployment readiness fixes (June 2026)
+- Emergent K8s deploy was timing out (pod never ready). Root cause: `load_dotenv(..., override=True)` in server.py and database.py stomped the platform-injected MONGO_URL/DB_NAME (prod Atlas) with local .env values → backend couldn't reach Mongo → readiness failed. Also `.gitignore` blocked all .env files from the deploy bundle.
+- Fixed: override=False in both files; removed `.env`/`.env.*`/`*.env` from .gitignore. Deployment agent re-scan: PASS. Testing agent regression: 100% backend+frontend, pytest 26/26.
+
 ### Known limits (by design)
 - Real WhatsApp delivery needs a human QR scan (Baileys) or Meta Cloud credentials; gateway is up and ready on :3001
 - Google Sheets OAuth sync and reminder crons inactive (need external credentials not shipped in repo)
