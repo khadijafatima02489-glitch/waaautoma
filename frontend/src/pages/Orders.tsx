@@ -82,7 +82,7 @@ const OrderCard = ({ order, onOpen, onAdvance, pending }: { order: Order; onOpen
 
 export default function Orders() {
   const client = useQueryClient();
-  const query = useQuery({ queryKey: ["orders"], queryFn: () => apiGet<Order[]>("/orders"), refetchInterval: 12000 });
+  const query = useQuery({ queryKey: ["orders"], queryFn: () => apiGet<Order[]>("/orders"), refetchInterval: 30000 });
   const orders = useMemo(() => query.data || [], [query.data]);
   const [view, setView] = useState<"board" | "table">("board");
   const [search, setSearch] = useState("");
