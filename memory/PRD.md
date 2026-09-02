@@ -27,6 +27,11 @@ Imported `khadijafatima02489-glitch/waautoma@main` with **zero source-code chang
 - Browser pass: login → dashboard → menu → orders → admin panel; testing agent independent regression: no critical issues
 - Test residue cleaned from DB (tscheck-* tenants removed; demo WhatsApp connection reset to simulator/connected)
 
+### Orders tab redesign (June 2026, user-requested)
+- `frontend/src/pages/Orders.tsx` rewritten into an operations command board: metrics ribbon (active/awaiting/revenue/avg), live AI pulse, search + delivery/pickup filters, Kanban ↔ Table view toggle, one-click status-advance pills, new-order sound chime toggle (localStorage)
+- New: `components/OrderDrawer.tsx` (slide-over quick view: receipt, status chips, WhatsApp chat/notify links, maps link, timeline) and `lib/orderStatus.ts` (shared status flow/theme)
+- Verified: typecheck + lint clean; testing agent frontend pass 40/40 assertions, no issues
+
 ### Known limits (by design)
 - Real WhatsApp delivery needs a human QR scan (Baileys) or Meta Cloud credentials; gateway is up and ready on :3001
 - Google Sheets OAuth sync and reminder crons inactive (need external credentials not shipped in repo)
