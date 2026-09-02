@@ -177,3 +177,21 @@ body {
 .dark .border-\[\#B8C9BC\] { border-color: #2c4a3e !important; }
 .dark .hover\:bg-\[\#F9FAF8\]:hover { background-color: #1b2322 !important; }
 .dark .hover\:bg-\[\#F3F4F1\]:hover { background-color: #1e2726 !important; }
+
+/* Thermal kitchen ticket: print only the ticket, sized for 80mm paper */
+@media print {
+    body * { visibility: hidden !important; }
+    .kitchen-ticket-print, .kitchen-ticket-print * { visibility: visible !important; }
+    .kitchen-ticket-print {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 80mm !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+}

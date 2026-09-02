@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { format } from "date-fns";
-import { ArrowUpRight, Bike, MapPin, MessageCircle, Phone, Store, Timer, User } from "lucide-react";
+import { ArrowUpRight, Bike, MapPin, MessageCircle, Phone, Printer, Store, Timer, User } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { fmtMoney, type Order } from "@/lib/api";
 import { StatusBadge } from "@/components/StatusBadge";
+import { KitchenTicket } from "@/components/KitchenTicket";
 import { FLOW, NEXT_LABEL, STATUS_THEME, nextStatus, timeAgo, waLink } from "@/lib/orderStatus";
 
 interface Props {
@@ -24,6 +26,7 @@ const fmtStamp = (iso: string) => {
 };
 
 export const OrderDrawer = ({ order, open, onOpenChange, onSetStatus, pending }: Props) => {
+  const [ticketOpen, setTicketOpen] = useState(false);
   if (!order) return null;
   const next = nextStatus(order.status);
   const history = [...(order.status_history || [])].reverse();
@@ -99,6 +102,9 @@ export const OrderDrawer = ({ order, open, onOpenChange, onSetStatus, pending }:
             <a data-testid="drawer-notify-whatsapp" href={waLink(order.customer_phone, notifyText)} target="_blank" rel="noreferrer" className="mt-2 flex items-center justify-center gap-2 rounded-full border border-[#25D366]/40 bg-[#25D366]/10 px-4 py-2 text-sm font-semibold text-[#128C4A] transition-colors hover:bg-[#25D366]/20 dark:text-[#4ce38a]">
               <MessageCircle size={15} /> Notify customer on WhatsApp
             </a>
+            <button data-testid="drawer-print-ticket" onClick={() => setTicketOpen(true)} className="mt-2 flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted">
+              <Printer size={15} /> Print kitchen ticket
+            </button>
           </section>
 
           {history.length > 0 && (
@@ -120,6 +126,7 @@ export const OrderDrawer = ({ order, open, onOpenChange, onSetStatus, pending }:
             Open full order page <ArrowUpRight size={15} />
           </Link>
         </div>
+        <KitchenTicket order={order} open={ticketOpen} onOpenChange={setTicketOpen} />
       </SheetContent>
     </Sheet>
   );

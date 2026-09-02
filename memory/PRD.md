@@ -31,6 +31,7 @@ Imported `khadijafatima02489-glitch/waautoma@main` with **zero source-code chang
 - `frontend/src/pages/Orders.tsx` rewritten into an operations command board: metrics ribbon (active/awaiting/revenue/avg), live AI pulse, search + delivery/pickup filters, Kanban ↔ Table view toggle, one-click status-advance pills, new-order sound chime toggle (localStorage)
 - New: `components/OrderDrawer.tsx` (slide-over quick view: receipt, status chips, WhatsApp chat/notify links, maps link, timeline) and `lib/orderStatus.ts` (shared status flow/theme)
 - Verified: typecheck + lint clean; testing agent frontend pass 40/40 assertions, no issues
+- Kitchen Ticket Print (June 2026): `components/KitchenTicket.tsx` — thermal-style 80mm ticket dialog from the order drawer ("Print kitchen ticket"), print CSS in index.css prints only the ticket via window.print(); verified via screenshot + typecheck/lint
 
 ### Known limits (by design)
 - Real WhatsApp delivery needs a human QR scan (Baileys) or Meta Cloud credentials; gateway is up and ready on :3001
