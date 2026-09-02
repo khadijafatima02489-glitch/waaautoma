@@ -47,6 +47,7 @@ async def create_order(*, restaurant: dict, conversation: dict, customer: dict) 
              "customer_name": conversation.get("customer_name") or customer.get("name") or "Customer",
              "customer_phone": conversation.get("customer_phone") or customer.get("phone"),
              "order_type": order_type, "address": conversation.get("address") if order_type == "delivery" else None,
+             "contact_number": conversation.get("contact_number") or conversation.get("customer_phone") or customer.get("phone"),
              **totals, "status": "New", **eta,
              "status_history": [{"status": "New", "at": created}], "created_at": created, "updated_at": created}
     await db.orders.insert_one({**order})

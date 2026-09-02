@@ -131,7 +131,7 @@ def test_simulator_ai_priced_summary(sim_phone, owner_token):
     payload = {
         "phone": sim_phone,
         "name": "Ali",
-        "text": "I want 2 zinger burgers and a coke, delivery to House 12 Gulberg, name Ali",
+        "text": "I want 2 zinger burgers and a coke, delivery to House 12, Street 5, Gulberg Block C, Lahore, name Ali. You can call me on this WhatsApp number.",
     }
     r = requests.post(f"{API}/simulator/message", json=payload,
                       headers=_h(owner_token), timeout=45)

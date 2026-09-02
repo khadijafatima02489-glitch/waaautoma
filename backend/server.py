@@ -14,7 +14,7 @@ load_dotenv(ROOT_DIR / '.env', override=False)
 from database import client
 import seed
 from routers import (admin, analytics, auth, billing, conversations, customers, menu, orders,
-                     restaurant, simulator, stream, webhooks, whatsapp)
+                     reservations, restaurant, simulator, stream, uploads, webhooks, whatsapp)
 
 
 app = FastAPI(title="AI Restaurant Ordering SaaS")
@@ -38,7 +38,7 @@ async def health():
 
 for router in (auth.router, admin.router, billing.router, restaurant.router, menu.router, orders.router, customers.router,
                analytics.router, whatsapp.router, conversations.router, simulator.router,
-               webhooks.router, stream.router):
+               webhooks.router, stream.router, uploads.router, reservations.router):
     api_router.include_router(router)
 
 # Include the router in the main app

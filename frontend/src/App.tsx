@@ -8,6 +8,8 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Orders from "@/pages/Orders";
 import OrderDetail from "@/pages/OrderDetail";
+import Conversations from "@/pages/Conversations";
+import Reservations from "@/pages/Reservations";
 import Customers from "@/pages/Customers";
 import CustomerDetail from "@/pages/CustomerDetail";
 import Menu from "@/pages/Menu";
@@ -43,6 +45,8 @@ export default function App() {
       <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
       <Route path="/orders" element={<Protected><Orders /></Protected>} />
       <Route path="/orders/:id" element={<Protected><OrderDetail /></Protected>} />
+      <Route path="/conversations" element={<Protected><Conversations /></Protected>} />
+      <Route path="/reservations" element={<Protected><Reservations /></Protected>} />
       <Route path="/customers" element={<Protected><Customers /></Protected>} />
       <Route path="/customers/:id" element={<Protected><CustomerDetail /></Protected>} />
       <Route path="/menu" element={<Protected><Menu /></Protected>} />

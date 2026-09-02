@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ChefHat, CirclePlus, Eye, EyeOff, Flame, ImageIcon, LayoutGrid, MoreVertical, Pencil, Percent, Rows3, Search, Sparkles, Trash2, UtensilsCrossed } from "lucide-react";
+import { ChefHat, CirclePlus, Eye, EyeOff, Flame, ImageIcon, LayoutGrid, MoreVertical, Pencil, Percent, Rows3, Search, Sparkles, Trash2, Upload, UtensilsCrossed } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -46,6 +46,24 @@ export default function Menu() {
   const [renameValue, setRenameValue] = useState("");
   const [bulkOpen, setBulkOpen] = useState(false);
   const [bulkPercent, setBulkPercent] = useState("10");
+  const [uploading, setUploading] = useState(false);
+
+  const uploadImage = async (file: File) => {
+    setUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/uploads/image", { method: "POST", headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}` }, body: form });
+      if (!res.ok) throw new Error("upload failed");
+      const data = (await res.json()) as { url: string };
+      setDish((d) => ({ ...d, image_url: data.url }));
+      toast.success("Photo uploaded");
+    } catch {
+      toast.error("Upload failed — use a JPG/PNG/WEBP under 5 MB");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const categories = query.data?.categories || [];
   const items = query.data?.items || [];
@@ -202,8 +220,17 @@ export default function Menu() {
           <div><Label>Price (PKR) *</Label><Input data-testid="item-price-input" type="number" min="0" value={dish.price} onChange={(e) => setDish({ ...dish, price: e.target.value })} placeholder="650" /></div>
           <div><Label>Original price (discount dikhane ke liye)</Label><Input data-testid="item-original-price-input" type="number" min="0" value={dish.original_price} onChange={(e) => setDish({ ...dish, original_price: e.target.value })} placeholder="800" /></div>
           <div className="sm:col-span-2">
-            <Label className="flex items-center gap-1.5"><ImageIcon size={14} /> Image URL</Label>
-            <Input data-testid="item-image-input" value={dish.image_url} onChange={(e) => setDish({ ...dish, image_url: e.target.value })} placeholder="https://..." />
+            <Label className="flex items-center gap-1.5"><ImageIcon size={14} /> Dish photo</Label>
+            <div className="mt-1 flex items-center gap-3">
+              {dish.image_url ? <img src={dish.image_url} alt="Dish preview" className="h-16 w-20 shrink-0 rounded-lg border border-border/60 object-cover" /> : <div className="grid h-16 w-20 shrink-0 place-items-center rounded-lg border border-dashed border-border text-muted-foreground"><ImageIcon size={18} /></div>}
+              <div className="min-w-0 flex-1 space-y-2">
+                <label data-testid="upload-photo-button" className={`inline-flex cursor-pointer items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-bold text-primary transition-colors hover:bg-primary/20 ${uploading ? "pointer-events-none opacity-60" : ""}`}>
+                  <Upload size={14} /> {uploading ? "Uploading…" : "Upload photo"}
+                  <input data-testid="item-photo-file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void uploadImage(f); e.target.value = ""; }} />
+                </label>
+                <Input data-testid="item-image-input" value={dish.image_url} onChange={(e) => setDish({ ...dish, image_url: e.target.value })} placeholder="…ya image URL paste karein" className="h-8 text-xs" />
+              </div>
+            </div>
             <div className="mt-2 flex flex-wrap gap-2">{PRESET_IMAGES.map((preset) => <button key={preset.label} data-testid={`preset-image-${preset.label.toLowerCase().replaceAll(" ", "-")}`} type="button" onClick={() => setDish({ ...dish, image_url: preset.url })} className={`overflow-hidden rounded-lg border-2 transition-colors ${dish.image_url === preset.url ? "border-primary" : "border-transparent hover:border-border"}`}><img src={preset.url} alt={preset.label} className="h-12 w-16 object-cover" /></button>)}</div>
           </div>
           <div className="sm:col-span-2">

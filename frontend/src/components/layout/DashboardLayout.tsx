@@ -1,13 +1,13 @@
 import { NavLink, useLocation } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { LayoutDashboard, ShoppingBag, Users, UtensilsCrossed, MessageCircle, Settings, Sparkles, LogOut, Pizza, CreditCard, Sheet } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Users, UtensilsCrossed, MessageCircle, MessagesSquare, CalendarClock, Settings, Sparkles, LogOut, Pizza, CreditCard, Sheet } from "lucide-react";
 import { apiGet, type WhatsAppConfig } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { ConnectionBadge } from "@/components/StatusBadge";
 import ThemeToggle from "@/components/ThemeToggle";
 
-const navigation = [["/dashboard", "Dashboard", LayoutDashboard], ["/orders", "Orders", ShoppingBag], ["/customers", "Customers", Users], ["/menu", "Menu", UtensilsCrossed], ["/whatsapp", "WhatsApp", MessageCircle], ["/google-sheets", "Google Sheets", Sheet], ["/billing", "Billing", CreditCard], ["/settings", "Restaurant Settings", Settings], ["/ai-settings", "AI Settings", Sparkles]] as const;
+const navigation = [["/dashboard", "Dashboard", LayoutDashboard], ["/orders", "Orders", ShoppingBag], ["/reservations", "Reservations", CalendarClock], ["/conversations", "Live Chat", MessagesSquare], ["/customers", "Customers", Users], ["/menu", "Menu", UtensilsCrossed], ["/whatsapp", "WhatsApp", MessageCircle], ["/google-sheets", "Google Sheets", Sheet], ["/billing", "Billing", CreditCard], ["/settings", "Restaurant Settings", Settings], ["/ai-settings", "AI Settings", Sparkles]] as const;
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const { session, logout } = useAuth(); const location = useLocation();
   const waQuery = useQuery({ queryKey: ["whatsapp-config"], queryFn: () => apiGet<WhatsAppConfig>("/whatsapp/config"), refetchInterval: 20000 });

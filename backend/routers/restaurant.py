@@ -24,6 +24,7 @@ class RestaurantUpdate(BaseModel):
     delivery_time_max: int | None = None
     currency: str | None = None
     ai_greeting: str | None = None
+    reservations_enabled: bool | None = None
 
 
 class AISettingsUpdate(BaseModel):

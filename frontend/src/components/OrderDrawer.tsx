@@ -49,6 +49,9 @@ export const OrderDrawer = ({ order, open, onOpenChange, onSetStatus, pending }:
             <p className="flex items-center gap-2"><Phone size={15} className="text-muted-foreground" />{order.customer_phone}
               <a data-testid="drawer-whatsapp-link" href={waLink(order.customer_phone)} target="_blank" rel="noreferrer" className="ml-1 inline-flex items-center gap-1 rounded-full bg-[#25D366]/15 px-2 py-0.5 text-xs font-semibold text-[#128C4A] transition-colors hover:bg-[#25D366]/25 dark:text-[#4ce38a]"><MessageCircle size={12} /> Chat</a>
             </p>
+            {order.contact_number && order.contact_number !== order.customer_phone && (
+              <p className="flex items-center gap-2"><Phone size={15} className="text-muted-foreground" /><span className="text-muted-foreground">Call:</span> {order.contact_number}</p>
+            )}
             <p className="flex items-center gap-2 capitalize">{order.order_type === "delivery" ? <Bike size={15} className="text-muted-foreground" /> : <Store size={15} className="text-muted-foreground" />}{order.order_type}</p>
             {order.address && (
               <p className="flex items-start gap-2"><MapPin size={15} className="mt-0.5 shrink-0 text-muted-foreground" /><span>{order.address}
